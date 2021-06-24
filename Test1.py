@@ -27,3 +27,13 @@ values, vectors = lg.eig(B)
 print(A)
 
 print(B)
+
+print(sum)
+
+print(dif)
+
+print(prod)
+
+print(transpose)
+
+print(values)
