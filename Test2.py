@@ -10,8 +10,12 @@ N = int(4)
 
 #Defining matricies
 S = np.zeros(shape=(N,N))
-mathcalS = np.zeros(shape=(N^2,N^2))
+mathcalS = np.zeros(shape=(N*N,N*N))
 mathcalA = np.zeros(shape=(N*N,N*N))
+kappa = np.zeros(shape=(N*N,N*N))
+U = np.zeros(shape=(N*N,N*N))
+tildekappa = np.zeros(shape=(N*N,N*N))
+K_0 = np.zeros(shape=(N*N,N*N))
 
 
 #Defining S and \mathcalS
@@ -22,6 +26,8 @@ for i in range(int(N/2), N):
 
 mathcalS = np.kron(S, S)
 
+#Implementing U from Timm and Lange
+U = mathcalS
 
 #Create \mathcalA
 for i in range(N):
@@ -83,4 +89,16 @@ for i in range(N):                  #Normal distributed entrys sigma = 1 for dia
                     else:
                         mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=0.5, size=None)
 
-print(mathcalA)
+#kappa = AA^T
+kappa = mathcalA.dot(mathcalA.T)
+
+#tildekappa = UkappaU^T
+tildekappa = U.dot(kappa.dot(U.T))
+
+K_0 = tildekappa
+for a in range(N*N):
+        K_0[N*(N-1)+(N-1)][a] = 0
+for b in range(N*N):
+        K_0[b][N*(N-1)+(N-1)] = 0
+
+print(K_0)
