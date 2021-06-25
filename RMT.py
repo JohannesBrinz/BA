@@ -6,7 +6,7 @@ import pandas as pd
 
 #Defining important constants
 
-N = int(4)
+N = int(30)
 M = int(100)
 
 
@@ -18,7 +18,7 @@ kappa = np.zeros(shape=(N*N,N*N))
 U = np.zeros(shape=(N*N,N*N))
 tildekappa = np.zeros(shape=(N*N,N*N))
 K_0 = np.zeros(shape=(N*N,N*N))
-Lambda = []
+Lambda = np.array([])
 
 
 #Defining S and \mathcalS
@@ -125,8 +125,16 @@ for e in range(M):
 
     values, vectors = lg.eig(K_0)
 
-    Lambda.append(values)
+    Lambda = np.append(Lambda, values)
 
-print(Lambda)
+
+print(Lambda, len(Lambda))
 
 #plotting histogram
+n, bins, patches = plt.hist(Lambda, bins = 10000, range = (-1, 1), density = True)
+
+plt.title('Histogram eigen values', fontsize = 15)
+plt.xlabel('$\lambda$', fontsize = 13)
+plt.ylabel('probability distribution', fontsize = 13)
+plt.savefig('Plots/Hist.png', dpi=300)
+plt.clf()
