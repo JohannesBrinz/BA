@@ -27,7 +27,23 @@ for i in range(int(N/2), N):
 mathcalS = np.kron(S, S)
 
 #Implementing U from Timm and Lange
-U = mathcalS
+for i in range(N):
+    for j in range(N):
+        for m in range(N):
+            for n in range(N):
+                if (N*m+n) == (N*i +j):
+                    if m == n:
+                        U[N*i+j][(N*m+n)] = 1/np.sqrt((m+2) * (m+1))
+                    else:
+                        U[N*i+j][(N*m+n)] = 1
+                elif n == m:
+                    if j == i:
+                        if n<i:
+                            U[N*i+j][(N*m+n)] = 1/np.sqrt((m+2) * (m+1))
+                        elif n == i+1:
+                            U[N*i+j][(N*m+n)] = -(m+1)/np.sqrt((m+2) * (m+1))
+
+#print(U)
 
 #Create \mathcalA
 for i in range(N):
@@ -101,4 +117,9 @@ for a in range(N*N):
 for b in range(N*N):
         K_0[b][N*(N-1)+(N-1)] = 0
 
-print(K_0)
+values, vectors = lg.eig(K_0)
+
+Lambda = []
+Lambda.append(values)
+
+print(Lambda)
