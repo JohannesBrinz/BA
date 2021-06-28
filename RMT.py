@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg as lg
+from scipy import signal
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -7,28 +8,20 @@ import pandas as pd
 #Defining important constants
 
 N = int(10)
-M = int(5000)
+M = int(80)
 
 
 #Defining matricies
-S = np.zeros(shape=(N,N))
-mathcalS = np.zeros(shape=(N*N,N*N))
 mathcalA = np.zeros(shape=(N*N,N*N))
 kappa = np.zeros(shape=(N*N,N*N))
 U = np.zeros(shape=(N*N,N*N))
 tildekappa = np.zeros(shape=(N*N,N*N))
 K_0 = np.zeros(shape=(N*N,N*N))
+kappa_0 = np.zeros(shape=(N*N,N*N))
+mathcalL = np.zeros(shape=(N*N,N*N))
 Lambda = np.array([])
 dif = np.array([])
 
-
-#Defining S and \mathcalS
-for i in range(int(N/2)):
-    S[i][i] = 1
-for i in range(int(N/2), N):
-    S[i][i] = -1
-
-mathcalS = np.kron(S, S)
 
 #Implementing U from Timm and Lange
 for i in range(N):
@@ -124,7 +117,19 @@ for e in range(M):
     for b in range(N*N):
             K_0[b][N*(N-1)+(N-1)] = 0
 
-    values, vectors = lg.eig(K_0)
+    #Calculating mathcalL from K_0 via Lange,Timm (easy way, by back-transforming) Eq.:(23)
+    kappa_0 = U.T.dot(K_0.dot(U))
+    for i in range(N):
+        for j in range(N):
+            for m in range(N):
+                for n in range(N):
+                    for sum in range(N):
+                        mathcalL[N*i+j][N*m+n] += signal.unit_impulse(N*N, i)*0.5*kappa_0[sum*N+j][sum*N+n] + signal.unit_impulse(N*N, j)*0.5*kappa_0[i*N+sum][m*N+sum]
+                    mathcalL[N*i+j][N*m+n] += kappa_0[N*i+m][N*j+n]
+
+
+
+    values = lg.eigvals(mathcalL)
 
     Lambda = np.append(Lambda, values)
 
@@ -147,7 +152,7 @@ plt.savefig('Plots/Hist.png', dpi=300)
 plt.clf()
 
 #distance
-n, bins, patches = plt.hist(dif, bins = 1000, range = (0, 0.01), density = True)
+n, bins, patches = plt.hist(dif, bins = 1000, range = (0, 0.0002), density = True)
 
 plt.title('Histogram correlation', fontsize = 15)
 plt.xlabel('$\lambda_i - \lambda_j$', fontsize = 13)
