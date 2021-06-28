@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(10)
-M = int(80)
+N = int(20)
+M = int(8)
 
 
 #Defining matricies
@@ -95,16 +95,22 @@ for e in range(M):
                 for n in range(N):
                     if mathcalA[(N*i+j)][(N*m+n)] == 0:
                         mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
-
+    plt.imshow(mathcalA.real)
     for i in range(N):                  #Normal distributed entrys sigma = 1 for diagonal, sigma = 1/2 off diagonal
         for j in range(N):
             for m in range(N):
                 for n in range(N):
                     if mathcalA[(N*i+j)][(N*m+n)] == 13:
-                        if (N*i+j)==(N*m+n):
-                            mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None))
-                        else:
+                        if (N*i+j)==(N*m+n):            #diagonal elements
+                            if i==j:
+                                mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=1, size=None)
+                                mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
+                            else:
+                                mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None))
+                                mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
+                        else:                   #off-diagonal elements
                             mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
+                            mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
 
     #kappa = AA^T
     kappa = mathcalA.dot(mathcalA.T)
@@ -141,14 +147,18 @@ for e in range(M):
 print(Lambda, len(Lambda))
 Lambda_sort = np.sort(Lambda)
 
+Lambda_real = Lambda.real
+Lambda_imag = Lambda.imag
+
 for i in range(len(Lambda_sort)-1):
      dif = np.append(dif, Lambda_sort[i+1]-Lambda_sort[i])
+     dist= np.sqrt(dif.real**2 + dif.imag**2)
 
 
 print("Das ist die Differenz:   ", dif)
 
 #plotting histogram
-n, bins, patches = plt.hist(Lambda, bins = 1000, range = (-1, 10), density = True)
+plt.hist2d(Lambda_real, Lambda_imag, bins = (1000, 1000), range =  [[-1000, 1000], [-1000, 1000]], density = True)
 
 plt.title('Histogram eigenvalues', fontsize = 15)
 plt.xlabel('$\lambda$', fontsize = 13)
@@ -157,7 +167,7 @@ plt.savefig('Plots/Hist.png', dpi=300)
 plt.clf()
 
 #distance
-n, bins, patches = plt.hist(dif, bins = 1000, range = (0, 0.0002), density = True)
+plt.hist(dist, bins = 1000, density = True)
 
 plt.title('Histogram correlation', fontsize = 15)
 plt.xlabel('$\lambda_i - \lambda_j$', fontsize = 13)
