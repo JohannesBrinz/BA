@@ -3,6 +3,7 @@ from scipy import linalg as lg
 from scipy import signal
 import matplotlib.pyplot as plt
 import pandas as pd
+import cmath
 
 
 #Defining important constants
@@ -12,13 +13,13 @@ M = int(80)
 
 
 #Defining matricies
-mathcalA = np.zeros(shape=(N*N,N*N))
-kappa = np.zeros(shape=(N*N,N*N))
-U = np.zeros(shape=(N*N,N*N))
-tildekappa = np.zeros(shape=(N*N,N*N))
-K_0 = np.zeros(shape=(N*N,N*N))
-kappa_0 = np.zeros(shape=(N*N,N*N))
-mathcalL = np.zeros(shape=(N*N,N*N))
+mathcalA = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+kappa = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+U = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+tildekappa = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+K_0 = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+kappa_0 = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+mathcalL = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
 Lambda = np.array([])
 dif = np.array([])
 
@@ -101,9 +102,9 @@ for e in range(M):
                 for n in range(N):
                     if mathcalA[(N*i+j)][(N*m+n)] == 13:
                         if (N*i+j)==(N*m+n):
-                            mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=1.0, size=None)
+                            mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None))
                         else:
-                            mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=0.5, size=None)
+                            mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
 
     #kappa = AA^T
     kappa = mathcalA.dot(mathcalA.T)
@@ -123,10 +124,13 @@ for e in range(M):
         for j in range(N):
             for m in range(N):
                 for n in range(N):
-                    for sum in range(N):
-                        mathcalL[N*i+j][N*m+n] += signal.unit_impulse(N*N, i)*0.5*kappa_0[sum*N+j][sum*N+n] + signal.unit_impulse(N*N, j)*0.5*kappa_0[i*N+sum][m*N+sum]
+                    if i == m:
+                        for sum in range(N):
+                            mathcalL[N*i+j][N*m+n] += 0.5*kappa_0[sum*N+j][sum*N+n]
+                    if j == n:
+                        for sum in range(N):
+                            mathcalL[N*i+j][N*m+n] += 0.5*kappa_0[i*N+sum][m*N+sum]
                     mathcalL[N*i+j][N*m+n] += kappa_0[N*i+m][N*j+n]
-
 
 
     values = lg.eigvals(mathcalL)
@@ -139,6 +143,7 @@ Lambda_sort = np.sort(Lambda)
 
 for i in range(len(Lambda_sort)-1):
      dif = np.append(dif, Lambda_sort[i+1]-Lambda_sort[i])
+
 
 print("Das ist die Differenz:   ", dif)
 
