@@ -9,7 +9,7 @@ import cmath
 #Defining important constants
 
 N = int(20)
-M = int(8)
+M = int(800)
 
 
 #Defining matricies
@@ -95,20 +95,22 @@ for e in range(M):
                 for n in range(N):
                     if mathcalA[(N*i+j)][(N*m+n)] == 0:
                         mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
-    plt.imshow(mathcalA.real)
+
     for i in range(N):                  #Normal distributed entrys sigma = 1 for diagonal, sigma = 1/2 off diagonal
         for j in range(N):
             for m in range(N):
                 for n in range(N):
                     if mathcalA[(N*i+j)][(N*m+n)] == 13:
-                        if (N*i+j)==(N*m+n):            #diagonal elements
+                        if m == n:            #real elements
                             if i==j:
                                 mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=1, size=None)
                                 mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
+
+                                #complex entries
                             else:
-                                mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None))
+                                mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=1, size=None))
                                 mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
-                        else:                   #off-diagonal elements
+                        else:
                             mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
                             mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
 

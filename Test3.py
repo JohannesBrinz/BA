@@ -93,19 +93,26 @@ for i in range(N):                  #A_ijmn = A_jinm
                 if mathcalA[(N*i+j)][(N*m+n)] == 0:
                     mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
 
+plt.matshow(mathcalA.real)
+plt.colorbar()
+plt.show()
+
+
 '''for i in range(N):                  #Normal distributed entrys sigma = 1 for diagonal, sigma = 1/2 off diagonal
     for j in range(N):
         for m in range(N):
             for n in range(N):
                 if mathcalA[(N*i+j)][(N*m+n)] == 13:
-                    if (N*i+j)==(N*m+n):            #diagonal elements
+                    if m == n:            #real elements
                         if i==j:
                             mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=1, size=None)
                             mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
+
+                        #complex entries
                         else:
-                            mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None))
+                            mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=1, size=None))
                             mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
-                    else:                   #off-diagonal elements
+                    else:
                         mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
                         mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
 '''
@@ -120,9 +127,6 @@ for a in range(N*N):
         K_0[N*(N-1)+(N-1)][a] = 0
 for b in range(N*N):
         K_0[b][N*(N-1)+(N-1)] = 0
-plt.matshow(K_0.real)
-plt.colorbar()
-plt.show()
 
 
 #Calculating mathcalL from K_0 via Lange,Timm (easy way, by back-transforming) Eq.:(23) (bad behavior)
