@@ -9,7 +9,7 @@ import cmath
 #Defining important constants
 
 N = int(2)
-M = int(1e5)
+M = int(1e6)
 
 
 #Defining matricies
@@ -153,19 +153,7 @@ for e in range(M):
 
     Lambda = np.append(Lambda, values)
 
-'''
-print("\ncalculating correlation (sorting)...")
-print("\nnumberof eigenvalues:   ", len(Lambda))
-Lambda_sort = np.sort(Lambda)
 
-Lambda_real = Lambda.real
-Lambda_imag = Lambda.imag
-
-#calculating \Delta\lambda
-for i in range(len(Lambda_sort)-1):
-     dif = np.append(dif, Lambda_sort[i+1]-Lambda_sort[i])
-     dist= np.sqrt(dif.real**2 + dif.imag**2)
-'''
 #separating real and complex eigenvalues
 print("\nseparating complex and real eigenvalues...")
 for i in range (len(Lambda)):
@@ -187,9 +175,9 @@ print("\nNumber of complex eigenvalues: ", len(complex_lambda))
 
 #saving to csv
 print("\nsaving to csv...")
-df_zero = pd.DataFrame(zero_lambda)
-df_real = pd.DataFrame(real_lambda)
-df_complex = pd.DataFrame(complex_lambda)
+df_zero = pd.DataFrame(zero_lambda, dtype = complex)
+df_real = pd.DataFrame(real_lambda, dtype = complex)
+df_complex = pd.DataFrame(complex_lambda, dtype = complex)
 
-df_complex.to_csv("Data/complex_eigenvalues.txt")
-df_real.to_csv("Data/real_eigenvalues.txt")
+df_complex.to_csv("Data/complex_eigenvalues_N2.txt")
+df_real.to_csv("Data/real_eigenvalues_N2.txt")
