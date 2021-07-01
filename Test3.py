@@ -112,17 +112,13 @@ for i in range(N):                  #Normal distributed entrys sigma = 1 for dia
                         mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
                         mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
 
-print(mathcalA.real)
+
 #kappa = AA^T
-kappa = mathcalA.dot(mathcalA.T)
+kappa = mathcalA.dot(np.conj(mathcalA).T)
 
 #tildekappa = UkappaU^T
 tildekappa = U.dot(kappa.dot(U.T))
-plt.matshow(tildekappa.real)
-plt.matshow(tildekappa.imag)
-plt.colorbar()
-plt.show()
-print(kappa.real)
+
 K_0 = tildekappa
 for a in range(N*N):
         K_0[N*(N-1)+(N-1)][a] = 0
@@ -145,9 +141,19 @@ for i in range(N):
                         mathcalL[N*i+j][N*m+n] += 0.5*kappa_0[i*N+sum][m*N+sum]
                 mathcalL[N*i+j][N*m+n] += kappa_0[N*i+m][N*j+n]
 
+
+
+
 values = lg.eigvals(mathcalL)
 
 Lambda = np.append(Lambda, values)
+
+print(Lambda.real)
+print(Lambda.imag)
+plt.matshow(Lambda.real)
+plt.matshow(Lambda.imag)
+plt.colorbar()
+plt.show()
 
 
 
