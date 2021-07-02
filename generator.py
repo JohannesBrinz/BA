@@ -8,14 +8,14 @@ import cmath
 
 #Defining important constants
 
-N = int(8)
-M = int(3e3)
+N = int(2)
+M = int(8e3)
 
 
 #Defining matricies
 mathcalA = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
 kappa = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
-U = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+U = np.zeros((N**2, N**2))
 tildekappa = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
 K_0 = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
 kappa_0 = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
@@ -36,9 +36,9 @@ for m in range(N):
                 if (N* o + p) == (N*m + n):
                     if n == m:
                         if m == (N-1):
-                            U[N*m+n][(N*o+p)] = 1/np.sqrt(N)
+                            U[N*m+n][N*o+p] = 1/np.sqrt(N)
                         else:
-                            U[N*m+n][(N*o+p)] = 1/np.sqrt((m+2) * (m+1))
+                            U[N*m+n][N*o+p] = 1/np.sqrt((m+2) * (m+1))
                     else:
                         U[N*m+n][(N*o+p)] = 1
                 elif p == o:
@@ -60,9 +60,9 @@ for e in range(M):
         for j in range(N):
             for m in range(N):
                 for n in range(N):
-                    mathcalA[(N*i+j)][(N*m+n)] = 13
+                    mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None)) #=13
 
-    for i in range(N):                  #Block 1
+    '''for i in range(N):                  #Block 1
         for j in range(N):
             for m in range(N):
                 for n in range(N):
@@ -121,13 +121,13 @@ for e in range(M):
                                 mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
                         else:
                             mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
-                            mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
+                            mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])'''
 
     #kappa = AA^\dagger
-    kappa = mathcalA.dot(np.conj(mathcalA).T)
+    kappa = mathcalA @ (np.conj(mathcalA).T)
 
     #tildekappa = UkappaU^T
-    tildekappa = U.dot(kappa.dot(U.T))
+    tildekappa = np.linalg.multi_dot([U, kappa, U.T])
 
     K_0 = tildekappa
     for a in range(N*N):
@@ -136,7 +136,8 @@ for e in range(M):
             K_0[b][N*(N-1)+(N-1)] = 0
 
     #Calculating mathcalL from K_0 via Lange,Timm (easy way, by back-transforming) Eq.:(23)
-    kappa_0 = U.T.dot(K_0.dot(U))
+    kappa_0 = U.T @ K_0 @ U
+    mathcalL = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
     for m in range(N):
         for n in range(N):
             for p in range(N):
@@ -144,27 +145,27 @@ for e in range(M):
                     mathcalL[N*m+n][N*p+q] += kappa_0[N*m+p][N*n+q]
                     if p == m:
                         for r in range(N):
-                            mathcalL[N*m+n][N*p+q] += -0.5*kappa_0[r*N+n][r*N+q]
+                            mathcalL[N*m+n][N*p+q] = mathcalL[N*m+n][N*p+q]-0.5*kappa_0[r*N+n][r*N+q]
                     if q == n:
                         for r in range(N):
-                            mathcalL[N*m+n][N*p+q] += -0.5*kappa_0[r*N+p][r*N+m]
+                            mathcalL[N*m+n][N*p+q] = mathcalL[N*m+n][N*p+q]-0.5*kappa_0[r*N+p][r*N+m]
 
 
     values = lg.eigvals(mathcalL)
-
+    print(values)
     Lambda = np.append(Lambda, values)
 
 
 #separating real and complex eigenvalues
 print("\nseparating complex and real eigenvalues...")
 for i in range (len(Lambda)):
-    if np.absolute(Lambda[i].real) == 0: #<= 3e-15:
-        if np.absolute(Lambda[i].imag) == 0: #<= 3e-15:
+    if np.absolute(Lambda[i].real) <= 3e-9:
+        if np.absolute(Lambda[i].imag) <= 3e-9:
             zero_lambda = np.append(zero_lambda, Lambda[i])
         else:
             complex_lambda = np.append(complex_lambda, Lambda[i])
-    if np.absolute(Lambda[i].real) != 0: #> 3e-15:
-        if np.absolute(Lambda[i].imag) != 0: #> 3e-15:
+    if np.absolute(Lambda[i].real) > 3e-9:
+        if np.absolute(Lambda[i].imag) > 3e-9:
             complex_lambda = np.append(complex_lambda, Lambda[i])
         else:
             real_lambda = np.append(real_lambda, Lambda[i])
@@ -179,5 +180,5 @@ print("\nsaving to csv...")
 df_real = pd.DataFrame(real_lambda, dtype = complex)
 df_complex = pd.DataFrame(complex_lambda, dtype = complex)
 
-df_complex.to_csv("Data/complex_eigenvalues_N8.txt")
-df_real.to_csv("Data/real_eigenvalues_N8.txt")
+df_complex.to_csv("Data/complex_eigenvalues_TL_N2.txt")
+df_real.to_csv("Data/real_eigenvalues_TL_N2.txt")
