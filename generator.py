@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(50)
-M = int(2e0)
+N = int(4)
+M = int(2e4)
 
 
 #Defining matricies
@@ -179,9 +179,9 @@ print("\nNumber of complex eigenvalues: ", len(complex_lambda))
 #saving to csv
 print("\nsaving to csv...")
 df_real = pd.DataFrame(real_lambda, dtype = complex)
-df_complex = pd.DataFrame(complex_lambda, dtype = complex)
+#df_complex = pd.DataFrame(complex_lambda, dtype = complex)
 df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 
-df_complex.to_csv("Data/complex_eigenvalues_N4.txt")
+#df_complex.to_csv("Data/complex_eigenvalues_N4.txt")
 df_real.to_csv("Data/real_eigenvalues_N4.txt")
 df_zero.to_csv("Data/zero_eigenvalues_N4.txt")
