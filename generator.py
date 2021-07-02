@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(2)
-M = int(8e3)
+N = int(50)
+M = int(2e0)
 
 
 #Defining matricies
@@ -56,13 +56,14 @@ for m in range(N):
 print("\ngenerating ensemble...")
 for e in range(M):
     #Create \mathcalA
+    mathcalA = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
     for i in range(N):
         for j in range(N):
             for m in range(N):
                 for n in range(N):
-                    mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=1, size=None), np.random.normal(loc=0.0, scale=1, size=None)) #=13
+                    mathcalA[(N*i+j)][(N*m+n)] = 13
 
-    '''for i in range(N):                  #Block 1
+    for i in range(N):                  #Block 1
         for j in range(N):
             for m in range(N):
                 for n in range(N):
@@ -118,10 +119,10 @@ for e in range(M):
                                 #complex entries
                             else:
                                 mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
-                                mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])
+                                mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)].conj()
                         else:
                             mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
-                            mathcalA[(N*j+i)][(N*n+m)] = np.conj(mathcalA[(N*i+j)][(N*m+n)])'''
+                            mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)].conj()
 
     #kappa = AA^\dagger
     kappa = mathcalA @ (np.conj(mathcalA).T)
@@ -179,6 +180,8 @@ print("\nNumber of complex eigenvalues: ", len(complex_lambda))
 print("\nsaving to csv...")
 df_real = pd.DataFrame(real_lambda, dtype = complex)
 df_complex = pd.DataFrame(complex_lambda, dtype = complex)
+df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 
-df_complex.to_csv("Data/complex_eigenvalues_TL_N2.txt")
-df_real.to_csv("Data/real_eigenvalues_TL_N2.txt")
+df_complex.to_csv("Data/complex_eigenvalues_N4.txt")
+df_real.to_csv("Data/real_eigenvalues_N4.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N4.txt")
