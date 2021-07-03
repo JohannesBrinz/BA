@@ -8,7 +8,7 @@ import cmath
 
 #Defining important constants
 
-N = int(4)
+N = int(8)
 M = int(2e4)
 
 
@@ -183,5 +183,5 @@ df_real = pd.DataFrame(real_lambda, dtype = complex)
 df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 
 #df_complex.to_csv("Data/complex_eigenvalues_N4.txt")
-df_real.to_csv("Data/real_eigenvalues_N4.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N4.txt")
+df_real.to_csv("Data/real_eigenvalues_N8.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N8.txt")
