@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(8)
-M = int(2e4)
+N = int(5)
+M = int(1e4)
 
 
 #Defining matricies
@@ -23,7 +23,6 @@ mathcalL = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
 Lambda = pd.DataFrame([])
 dif = pd.DataFrame([])
 real_lambda = pd.DataFrame([])
-complex_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
 
 
@@ -151,10 +150,15 @@ for e in range(M):
                         for r in range(N):
                             mathcalL[N*m+n][N*p+q] = mathcalL[N*m+n][N*p+q]-0.5*kappa_0[r*N+p][r*N+m]
 
-
+    #-------------------sorting--------------
     values = lg.eigvals(mathcalL)
-    print(values)
+    values_sort = np.sort(values)
+    print(values_sort)
     Lambda = np.append(Lambda, values)
+
+    for i in range(len(values_sort)-1):
+         dif = np.append(dif, values_sort[i+1]-values_sort[i])
+
 
 
 #separating real and complex eigenvalues
@@ -173,15 +177,17 @@ for i in range (len(Lambda)):
 
 
 print("\nNumber of zero eigenvalues: ", len(zero_lambda))
-print("\nNumber of real eigenvalues: ", len(real_lambda))
-print("\nNumber of complex eigenvalues: ", len(complex_lambda))
+print("\nNumber of non-zero eigenvalues: ", len(real_lambda))
+
+
 
 #saving to csv
 print("\nsaving to csv...")
 df_real = pd.DataFrame(real_lambda, dtype = complex)
-#df_complex = pd.DataFrame(complex_lambda, dtype = complex)
 df_zero = pd.DataFrame(zero_lambda, dtype = complex)
+df_dif = pd.DataFrame(dif.real)
 
-#df_complex.to_csv("Data/complex_eigenvalues_N4.txt")
-df_real.to_csv("Data/real_eigenvalues_N8.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N8.txt")
+
+df_real.to_csv("Data/real_eigenvalues_N5.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N5.txt")
+df_dif.to_csv("Data/dif5.txt")
