@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(9)
-M = int(1e3)
+N = int(20)
+M = int(1e2)
 
 
 #Defining matricies
@@ -184,6 +184,6 @@ df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 
 
-df_real.to_csv("Data/real_eigenvalues_N9.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N9.txt")
-df_dif.to_csv("Data/dif9.txt")
+df_real.to_csv("Data/real_eigenvalues_N20.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N20.txt")
+df_dif.to_csv("Data/dif20.txt")
