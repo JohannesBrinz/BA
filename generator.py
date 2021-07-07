@@ -8,7 +8,7 @@ import cmath
 
 #Defining important constants
 
-N = int(5)
+N = int(9)
 M = int(1e4)
 
 
@@ -24,7 +24,7 @@ Lambda = pd.DataFrame([])
 dif = pd.DataFrame([])
 real_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
-
+counter = 0
 
 #Implementing U from Timm and Lange
 print("\nImplementing U...")
@@ -153,27 +153,23 @@ for e in range(M):
     #-------------------sorting--------------
     values = lg.eigvals(mathcalL)
     values_sort = np.sort(values)
-    print(values_sort)
     Lambda = np.append(Lambda, values)
 
     for i in range(len(values_sort)-1):
          dif = np.append(dif, values_sort[i+1]-values_sort[i])
 
+    counter += 1
+    print(M-counter)
+
 
 
 #separating real and complex eigenvalues
-print("\nseparating complex and real eigenvalues...")
+print("\nseparating zero and non-zero eigenvalues...")
 for i in range (len(Lambda)):
-    if np.absolute(Lambda[i].real) <= 3e-9:
-        if np.absolute(Lambda[i].imag) <= 3e-9:
-            zero_lambda = np.append(zero_lambda, Lambda[i])
-        else:
-            complex_lambda = np.append(complex_lambda, Lambda[i])
-    if np.absolute(Lambda[i].real) > 3e-9:
-        if np.absolute(Lambda[i].imag) > 3e-9:
-            complex_lambda = np.append(complex_lambda, Lambda[i])
-        else:
-            real_lambda = np.append(real_lambda, Lambda[i])
+    if np.absolute(Lambda[i].real) <= 3e-12:
+        zero_lambda = np.append(zero_lambda, Lambda[i])
+    else:
+        real_lambda = np.append(real_lambda, Lambda[i])
 
 
 print("\nNumber of zero eigenvalues: ", len(zero_lambda))
@@ -188,6 +184,6 @@ df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 
 
-df_real.to_csv("Data/real_eigenvalues_N5.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N5.txt")
-df_dif.to_csv("Data/dif5.txt")
+df_real.to_csv("Data/real_eigenvalues_N9.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N9.txt")
+df_dif.to_csv("Data/dif9.txt")
