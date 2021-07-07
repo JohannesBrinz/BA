@@ -9,7 +9,7 @@ import cmath
 #Defining important constants
 
 N = int(9)
-M = int(1e4)
+M = int(1e3)
 
 
 #Defining matricies
