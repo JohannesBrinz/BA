@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(20)
-M = int(1e2)
+N = int(6)
+M = int(1e4)
 
 
 #Defining matricies
@@ -25,6 +25,14 @@ dif = pd.DataFrame([])
 real_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
 counter = 0
+
+#Implementierung von mathcalS
+S = np.diag([1,1,1,-1,-1,-1])
+mathcalS = np.kron(S, S)
+
+plt.matshow(mathcalS.real)
+plt.colorbar()
+plt.show()
 
 #Implementing U from Timm and Lange
 print("\nImplementing U...")
@@ -49,62 +57,45 @@ for m in range(N):
                                 U[N*m+n][(N*o+p)] = -(m+1)/np.sqrt((m+2) * (m+1))
                         else:
                             U[N*m+n][(N*o+p)] = 1/np.sqrt(N)
+#Create \mathcalA
+mathcalA = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+for i in range(N):
+    for j in range(N):
+        for m in range(N):
+            for n in range(N):
+                mathcalA[(N*i+j)][(N*m+n)] = 13
 
+SAS = mathcalS @ mathcalA @ mathcalS.T
+for i in range(N):
+    for j in range(N):
+        for m in range(N):
+            for n in range(N):
+                if SAS[N*i+j][m*N+n] == -mathcalA[(N*i+j)][(N*m+n)]:
+                    mathcalA[(N*i+j)][(N*m+n)] = 0
+for i in range(N):                  #A_ijmn = A_jinm
+    for j in range(N):
+        for m in range(N):
+            for n in range(N):
+                if mathcalA[(N*i+j)][(N*m+n)] == 0:
+                    mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
 
+ref = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
+for i in range(N):
+    for j in range(N):
+        for m in range(N):
+            for n in range(N):
+                ref[i*N+j][N*m+n] = mathcalA[i*N+j][N*m+n]
+plt.matshow(ref.real)
+plt.colorbar()
+plt.show()
 #Generating ensemble
 print("\ngenerating ensemble...")
 for e in range(M):
-    #Create \mathcalA
-    mathcalA = np.zeros(shape=(N*N,N*N),dtype=np.complex_)
     for i in range(N):
         for j in range(N):
             for m in range(N):
                 for n in range(N):
-                    mathcalA[(N*i+j)][(N*m+n)] = 13
-
-    for i in range(N):                  #Block 1
-        for j in range(N):
-            for m in range(N):
-                for n in range(N):
-                    if (N*i+j) < int(N*N/4):
-                        if int(N*N/4) <= (N*m+n):
-                            if (N*m+n) < int(3*N*N/4):
-                                mathcalA[(N*i+j)][(N*m+n)] = 0
-
-    for i in range(N):                  #Block 2
-        for j in range(N):
-            for m in range(N):
-                for n in range(N):
-                    if (N*m+n) < int(N*N/4):
-                        if int(N*N/4) <= (N*i+j):
-                            if (N*i+j) < int(3*N*N/4):
-                                mathcalA[(N*i+j)][(N*m+n)] = 0
-
-    for i in range(N):                  #Block 3
-        for j in range(N):
-            for m in range(N):
-                for n in range(N):
-                    if (N*m+n) >= int(3*N*N/4):
-                        if int(N*N/4) <= (N*i+j):
-                            if (N*i+j) < int(3*N*N/4):
-                                mathcalA[(N*i+j)][(N*m+n)] = 0
-
-    for i in range(N):                  #Block 4
-        for j in range(N):
-            for m in range(N):
-                for n in range(N):
-                    if (N*i+j) >= int(3*N*N/4):
-                        if int(N*N/4) <= (N*m+n):
-                            if (N*m+n) < int(3*N*N/4):
-                                mathcalA[(N*i+j)][(N*m+n)] = 0
-
-    for i in range(N):                  #A_ijmn = A_jinm
-        for j in range(N):
-            for m in range(N):
-                for n in range(N):
-                    if mathcalA[(N*i+j)][(N*m+n)] == 0:
-                        mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
-
+                    mathcalA[i*N+j][N*m+n] = ref[i*N+j][N*m+n]
     for i in range(N):                  #Normal distributed entrys sigma = 1 for diagonal, sigma = 1/2 off diagonal
         for j in range(N):
             for m in range(N):
@@ -184,6 +175,6 @@ df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 
 
-df_real.to_csv("Data/real_eigenvalues_N20.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N20.txt")
-df_dif.to_csv("Data/dif20.txt")
+df_real.to_csv("Data/real_eigenvalues_N6.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N6.txt")
+df_dif.to_csv("Data/dif6.txt")
