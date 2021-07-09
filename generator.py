@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(6)
-M = int(1e4)
+N = int(10)
+M = int(1.5e4)
 
 
 #Defining matricies
@@ -27,7 +27,7 @@ zero_lambda = pd.DataFrame([])
 counter = 0
 
 #Implementierung von mathcalS
-S = np.diag([1,1,1,-1,-1,-1])
+S = np.diag([1,1,1,1,1,-1,-1,-1,-1,-1])
 mathcalS = np.kron(S, S)
 
 plt.matshow(mathcalS.real)
@@ -142,12 +142,12 @@ for e in range(M):
                             mathcalL[N*m+n][N*p+q] = mathcalL[N*m+n][N*p+q]-0.5*kappa_0[r*N+p][r*N+m]
 
     #-------------------sorting--------------
-    values = lg.eigvals(mathcalL)
-    values_sort = np.sort(values)
+    values = lg.eigh(mathcalL, eigvals_only=True)
+    #values_sort = np.sort(values)
     Lambda = np.append(Lambda, values)
 
-    for i in range(len(values_sort)-1):
-         dif = np.append(dif, values_sort[i+1]-values_sort[i])
+    for i in range(len(values)-1):
+         dif = np.append(dif, values[i+1]-values[i])
 
     counter += 1
     print(M-counter)
@@ -175,6 +175,6 @@ df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 
 
-df_real.to_csv("Data/real_eigenvalues_N6.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N6.txt")
-df_dif.to_csv("Data/dif6.txt")
+df_real.to_csv("Data/real_eigenvalues_N10.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N10.txt")
+df_dif.to_csv("Data/dif10.txt")
