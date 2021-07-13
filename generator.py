@@ -9,7 +9,7 @@ import cmath
 #Defining important constants
 
 N = int(10)
-M = int(1.5e4)
+M = int(2e4)
 
 
 #Defining matricies
@@ -25,7 +25,6 @@ dif = pd.DataFrame([])
 real_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
 counter = 0
-
 #Implementierung von mathcalS
 S = np.diag([1,1,1,1,1,-1,-1,-1,-1,-1])
 mathcalS = np.kron(S, S)
@@ -63,7 +62,7 @@ for i in range(N):
     for j in range(N):
         for m in range(N):
             for n in range(N):
-                mathcalA[(N*i+j)][(N*m+n)] = 13
+                mathcalA[(N*i+j)][(N*m+n)] = 1
 
 SAS = mathcalS @ mathcalA @ mathcalS.T
 for i in range(N):
@@ -72,7 +71,7 @@ for i in range(N):
             for n in range(N):
                 if SAS[N*i+j][m*N+n] == -mathcalA[(N*i+j)][(N*m+n)]:
                     mathcalA[(N*i+j)][(N*m+n)] = 0
-for i in range(N):                  #A_ijmn = A_jinm
+for i in range(N):                  #A_ijmn = A_jinm12
     for j in range(N):
         for m in range(N):
             for n in range(N):
@@ -85,9 +84,7 @@ for i in range(N):
         for m in range(N):
             for n in range(N):
                 ref[i*N+j][N*m+n] = mathcalA[i*N+j][N*m+n]
-plt.matshow(ref.real)
-plt.colorbar()
-plt.show()
+
 #Generating ensemble
 print("\ngenerating ensemble...")
 for e in range(M):
@@ -96,16 +93,16 @@ for e in range(M):
             for m in range(N):
                 for n in range(N):
                     mathcalA[i*N+j][N*m+n] = ref[i*N+j][N*m+n]
+
     for i in range(N):                  #Normal distributed entrys sigma = 1 for diagonal, sigma = 1/2 off diagonal
         for j in range(N):
             for m in range(N):
                 for n in range(N):
-                    if mathcalA[(N*i+j)][(N*m+n)] == 13:
+                    if mathcalA[(N*i+j)][(N*m+n)] == 1:
                         if m == n:            #real elements
                             if i==j:
                                 mathcalA[(N*i+j)][(N*m+n)] = np.random.normal(loc=0.0, scale=1, size=None)
                                 mathcalA[(N*j+i)][(N*n+m)] = mathcalA[(N*i+j)][(N*m+n)]
-
                                 #complex entries
                             else:
                                 mathcalA[(N*i+j)][(N*m+n)] = complex(np.random.normal(loc=0.0, scale=0.5, size=None), np.random.normal(loc=0.0, scale=0.5, size=None))
@@ -145,8 +142,7 @@ for e in range(M):
     values = lg.eigh(mathcalL, eigvals_only=True)
     #values_sort = np.sort(values)
     Lambda = np.append(Lambda, values)
-
-    for i in range(len(values)-1):
+    for i in range(len(values)-2):
          dif = np.append(dif, values[i+1]-values[i])
 
     counter += 1
@@ -157,7 +153,7 @@ for e in range(M):
 #separating real and complex eigenvalues
 print("\nseparating zero and non-zero eigenvalues...")
 for i in range (len(Lambda)):
-    if np.absolute(Lambda[i].real) <= 3e-12:
+    if np.absolute(Lambda[i].real) <= 1e-9:
         zero_lambda = np.append(zero_lambda, Lambda[i])
     else:
         real_lambda = np.append(real_lambda, Lambda[i])
@@ -166,11 +162,11 @@ for i in range (len(Lambda)):
 print("\nNumber of zero eigenvalues: ", len(zero_lambda))
 print("\nNumber of non-zero eigenvalues: ", len(real_lambda))
 
-
+#np.where
 
 #saving to csv
 print("\nsaving to csv...")
-df_real = pd.DataFrame(real_lambda, dtype = complex)
+df_real = pd.DataFrame(real_lambda.real, dtype = complex)
 df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 

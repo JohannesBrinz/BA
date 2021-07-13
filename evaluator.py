@@ -189,7 +189,7 @@ plt.clf()
 #-----------------------------plotting correlation-----------------------------
 print("\nplotting correlation...")
 #N=3
-plt.hist(dif3, bins = 201, density = True)
+plt.hist(dif3, bins = 201, density = True, range = [0, 5])
 plt.title('Correlation eigenvalues $\Delta\lambda$, $N=3$', fontsize = 15)
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
 plt.ylabel('probability distribution', fontsize = 13)
@@ -198,7 +198,7 @@ plt.savefig('Plots/correlation_N3.png', dpi=300)
 plt.clf()
 
 #N=4
-plt.hist(dif4, bins = 201, density = True)#, range = [0, 3])
+plt.hist(dif4, bins = 201, density = True, range = [0, 5])
 plt.title('Correlation eigenvalues $\Delta\lambda$, $N=4$', fontsize = 15)
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
 plt.ylabel('probability distribution', fontsize = 13)
@@ -234,7 +234,7 @@ plt.savefig('Plots/correlation_N7.png', dpi=300)
 plt.clf()
 
 #N=8
-plt.hist(dif8, bins = 201, range = [0, 10], density = True)
+plt.hist(dif8, bins = 201, range = [0, 5], density = True)
 plt.title('Correlation eigenvalues $\Delta\lambda$, $N=8$', fontsize = 15)
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
 plt.ylabel('probability distribution', fontsize = 13)
@@ -243,7 +243,7 @@ plt.savefig('Plots/correlation_N8.png', dpi=300)
 plt.clf()
 
 #N=9
-plt.hist(dif9, bins = 201, range = [0, 10], density = True)
+plt.hist(dif9, bins = 201, range = [0, 5], density = True)
 plt.title('Correlation eigenvalues $\Delta\lambda$, $N=9$', fontsize = 15)
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
 plt.ylabel('probability distribution', fontsize = 13)
@@ -261,7 +261,7 @@ plt.savefig('Plots/correlation_N10.png', dpi=300)
 plt.clf()
 
 #N=16
-plt.hist(dif16, bins = 201, range = [0, 10], density = True)
+plt.hist(dif16, bins = 201, range = [0, 5], density = True)
 plt.title('Correlation eigenvalues $\Delta\lambda$, $N=16$', fontsize = 15)
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
 plt.ylabel('probability distribution', fontsize = 13)
