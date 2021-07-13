@@ -1,6 +1,5 @@
 import numpy as np
 from scipy import linalg as lg
-from scipy import signal
 import matplotlib.pyplot as plt
 import pandas as pd
 import cmath
@@ -278,6 +277,23 @@ plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif20))], loc = 
 plt.savefig('Plots/correlation_N20.png', dpi=300)
 plt.clf()
 
+#all the same
+n,x = np.histogram(dif3, bins = 201, density = True, range = [0, 5])
+plt.plot(x[:-1], n)
+n,x= np.histogram(dif4, bins = 201, density = True, range = [0, 5])
+plt.plot(x[:-1], n)
+n,x= np.histogram(dif6, bins = 201, density = True, range = [0, 5])
+plt.plot(x[:-1], n)
+n,x= np.histogram(dif8, bins = 201, density = True, range = [0, 5])
+plt.plot(x[:-1], n)
+n,x= np.histogram(dif20, bins = 201, density = True, range = [0, 5])
+plt.plot(x[:-1], n)
+plt.title('Correlation eigenvalues $\Delta\lambda$ for different dimensions', fontsize = 15)
+plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
+plt.ylabel('probability distribution', fontsize = 13)
+plt.legend(["N=3", "N=4", "N=6", "N=8", "N=20"])
+plt.savefig('Plots/correlation_same.png', dpi=300)
+plt.clf()
 
 #-----------------------------------------mean lambda(N)-------------------------------------------
 def exp(x, a, b):
