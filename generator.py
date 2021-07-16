@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(10)
-M = int(2e4)
+N = int(20)
+M = int(2e3)
 
 
 #Defining matricies
@@ -26,7 +26,7 @@ real_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
 counter = 0
 #Implementierung von mathcalS
-S = np.diag([1,1,1,1,1,-1,-1,-1,-1,-1])
+S = np.diag([1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1])
 mathcalS = np.kron(S, S)
 
 plt.matshow(mathcalS.real)
@@ -171,6 +171,6 @@ df_zero = pd.DataFrame(zero_lambda, dtype = complex)
 df_dif = pd.DataFrame(dif.real)
 
 
-df_real.to_csv("Data/real_eigenvalues_N10.txt")
-df_zero.to_csv("Data/zero_eigenvalues_N10.txt")
-df_dif.to_csv("Data/dif10.txt")
+df_real.to_csv("Data/real_eigenvalues_N20.txt")
+df_zero.to_csv("Data/zero_eigenvalues_N20.txt")
+df_dif.to_csv("Data/dif20.txt")
