@@ -84,9 +84,6 @@ dif9 = dif9["number"].to_numpy()
 dif10 = pd.read_csv("Data/dif10.txt", sep = ",", header = 0, \
     names = ["index", "number"])
 dif10 = dif10["number"].to_numpy()
-dif16 = pd.read_csv("Data/dif16.txt", sep = ",", header = 0, \
-    names = ["index", "number"])
-dif16 = dif16["number"].to_numpy()
 dif20 = pd.read_csv("Data/dif20.txt", sep = ",", header = 0, \
     names = ["index", "number"])
 dif20 = dif20["number"].to_numpy()
@@ -97,207 +94,6 @@ dif48 = dif48["number"].to_numpy()
 
 
 
-#---------------------------------plotting eigenvalues-----------------------------
-print("\nplotting...")
-#------------------------------------N=3----------------------------------
-plt.hist(real_lambda_N3.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=3$', fontsize = 15)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N3.real))], loc = 2)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.savefig('Plots/Hist_real_N3.png', dpi=300)
-plt.clf()
-#-------------------------N=4--------------------------------------------
-plt.hist(real_lambda_N4.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=4$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N4.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N4.png', dpi=300)
-plt.clf()
-
-#------------------------------------------N=5---------------------------------------------
-plt.hist(real_lambda_N5.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=5$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N5.real))], loc = 2)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.savefig('Plots/Hist_real_N5.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=6----------------------------------
-plt.hist(real_lambda_N6.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=6$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N6.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N6.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=7----------------------------------
-plt.hist(real_lambda_N7.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, , $N=7$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N7.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N7.png', dpi=300)
-plt.clf()
-
-
-#----------------------------------------------N=8-----------------------------------------
-plt.hist(real_lambda_N8.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=8$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N8.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N8.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=9----------------------------------
-plt.hist(real_lambda_N9.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=9$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N9.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N9.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=10----------------------------------
-plt.hist(real_lambda_N10.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=10$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N10.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N10.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=16----------------------------------
-plt.hist(real_lambda_N16.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=16$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N16.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N16.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=20----------------------------------
-plt.hist(real_lambda_N20.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=20$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N20.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N20.png', dpi=300)
-plt.clf()
-
-#--------------------------------------------------N=48----------------------------------
-plt.hist(real_lambda_N48.real, bins = 201, density = True)
-plt.title('Distribution function real eigenvalues $P_{\lambda}$, $N=48$', fontsize = 15)
-plt.xlabel('$\lambda$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated eigenvalues: "+ str(len(real_lambda_N48.real))], loc = 2)
-plt.savefig('Plots/Hist_real_N48.png', dpi=300)
-plt.clf()
-
-#-----------------------------plotting correlation-----------------------------
-print("\nplotting correlation...")
-#N=3
-plt.hist(dif3, bins = 201, density = True, range = [0, 5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=3$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif3))], loc = 1)
-plt.savefig('Plots/correlation_N3.png', dpi=300)
-plt.clf()
-
-#N=4
-plt.hist(dif4, bins = 201, density = True, range = [0, 5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=4$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif4))], loc = 1)
-plt.savefig('Plots/correlation_N4.png', dpi=300)
-plt.clf()
-
-#N=5
-plt.hist(dif5, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=5$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif5))], loc = 1)
-plt.savefig('Plots/correlation_N5.png', dpi=300)
-plt.clf()
-
-#N=6
-plt.hist(dif6, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=6$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif6))], loc = 1)
-plt.savefig('Plots/correlation_N6.png', dpi=300)
-plt.clf()
-
-#N=7
-plt.hist(dif7, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=7$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif7))], loc = 1)
-plt.savefig('Plots/correlation_N7.png', dpi=300)
-plt.clf()
-
-#N=8
-plt.hist(dif8, bins = 201, range = [0, 5], density = True)
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=8$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif8))], loc = 1)
-plt.savefig('Plots/correlation_N8.png', dpi=300)
-plt.clf()
-
-#N=9
-plt.hist(dif9, bins = 201, range = [0, 5], density = True)
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=9$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif9))], loc = 1)
-plt.savefig('Plots/correlation_N9.png', dpi=300)
-plt.clf()
-
-#N=10
-plt.hist(dif10, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=10$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif10))], loc = 1)
-plt.savefig('Plots/correlation_N10.png', dpi=300)
-plt.clf()
-
-#N=16
-plt.hist(dif16, bins = 201, range = [0, 5], density = True)
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=16$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif16))], loc = 1)
-plt.savefig('Plots/correlation_N16.png', dpi=300)
-plt.clf()
-
-#N=20
-plt.hist(dif20, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=20$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif20))], loc = 1)
-plt.savefig('Plots/correlation_N20.png', dpi=300)
-plt.clf()
-
-#N=48
-plt.hist(dif48, bins = 201, density = True, range = [0,5])
-plt.title('Correlation eigenvalues $\Delta\lambda$, $N=48$', fontsize = 15)
-plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize = 13)
-plt.ylabel('probability distribution', fontsize = 13)
-plt.legend(["Calculated nearest neighbour distances: "+ str(len(dif48))], loc = 1)
-plt.savefig('Plots/correlation_N48.png', dpi=300)
-plt.clf()
 
 #all the same
 font = {'family' : 'normal',
@@ -326,6 +122,9 @@ plt.clf()
 #Wigner
 def wigner(s):
     return s/2 * np.exp(-s**2/4)
+def poisson(s):
+    return 0.5*np.exp(-s)
+
 font = {'family' : 'normal',
         'weight' : 'normal',
         'size'   : 20}
@@ -333,11 +132,12 @@ font = {'family' : 'normal',
 plt.rc('font', **font)
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.plot(np.linspace(0, 5, 1000), wigner(np.linspace(0, 5, 1000)))
+plt.plot(np.linspace(0, 5, 1000), poisson(np.linspace(0, 5, 1000)), color = "black", linestyle = "--")
 #plt.title('Eigenvalue correlation for different dimensions\n')
 plt.xlabel('$|\lambda_i - \lambda_{i+1}|$', fontsize=18)
 plt.ylabel('probability distribution')
 plt.yticks(np.linspace(0,0.4,5))
-plt.legend(["Wigner surmise"])
+plt.legend(["Wigner surmise", "poisson distribution"])
 plt.savefig('Plots/wigner_surmise.png', dpi=300)
 plt.clf()
 
@@ -373,6 +173,7 @@ axs[0,0].set_title('N=3')
 axs[0,0].set_xticks([-30,-20,-10,0])
 axs[0,0].set_yticks(np.linspace(0,0.12,4))
 axs[0,0].ticklabel_format(axis="y", style="sci", scilimits=(0,0))
+axs[0,0].set_ylabel("probability distribution")
 axs[0,1].hist(real_lambda_N4.real, bins = 201, density = True)
 axs[0,1].set_title('N=4')
 axs[0,1].set_xticks([-60,-40,-20,0])
@@ -383,21 +184,25 @@ axs[1,0].set_title('N=6')
 axs[1,0].set_xticks(np.linspace(-100,-20,5))
 axs[1,0].set_yticks(np.linspace(0,0.03,4))
 axs[1,0].ticklabel_format(axis="y", style="sci", scilimits=(0,0))
+axs[1,0].set_ylabel("probability distribution\n")
 axs[1,1].hist(real_lambda_N9.real, bins = 201, density = True)
 axs[1,1].set_title('N=9')
 axs[1,1].set_xticks(np.linspace(-270,-120,4))
 axs[1,1].set_yticks(np.linspace(0,0.012,4))
 axs[1,1].ticklabel_format(axis="y", style="sci", scilimits=(0,0))
-axs[2,0].hist(real_lambda_N10.real, bins = 201, density = True)
+axs[2,0].hist(real_lambda_N10.real, bins = 201, density = True, range = [-360,-180])
 axs[2,0].set_title('N=10')
 axs[2,0].set_xticks(np.linspace(-330,-180,4))
 axs[2,0].set_yticks(np.linspace(0,0.012,4))
 axs[2,0].ticklabel_format(axis="y", style="sci", scilimits=(0,0))
+axs[2,0].set_xlabel("$\lambda$")
+axs[2,0].set_ylabel("probability distribution")
 axs[2,1].hist(real_lambda_N20.real, bins = 201, density = True)
 axs[2,1].set_title('N=20')
 axs[2,1].set_xticks(np.linspace(-2300,-1700,4))
 axs[2,1].set_yticks(np.linspace(0,0.003,4))
 axs[2,1].ticklabel_format(axis="y", style="sci", scilimits=(0,0))
+axs[2,1].set_xlabel("$\lambda$")
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
 plt.savefig('Plots/test.png', dpi=300)
 plt.clf()

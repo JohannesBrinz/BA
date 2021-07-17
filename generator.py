@@ -8,8 +8,8 @@ import cmath
 
 #Defining important constants
 
-N = int(20)
-M = int(2e3)
+N = int(48)
+M = int(2e2)
 
 
 #Defining matricies
@@ -26,7 +26,7 @@ real_lambda = pd.DataFrame([])
 zero_lambda = pd.DataFrame([])
 counter = 0
 #Implementierung von mathcalS
-S = np.diag([1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1])
+S = np.diag([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1])
 mathcalS = np.kron(S, S)
 
 plt.matshow(mathcalS.real)
