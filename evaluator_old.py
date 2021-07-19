@@ -12,6 +12,8 @@ plt.style.use('Solarize_Light2')
 
 plt.style.use('classic')
 
+plt.rcParams['text.usetex'] = True
+
 #---------------------------------reading data---------------------------------------
 print("\nreading data...")
 real_lambda_N3 = pd.read_csv("Data/real_eigenvalues_N3.txt", sep = ",", header = 0, \
